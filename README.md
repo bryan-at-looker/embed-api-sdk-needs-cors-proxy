@@ -15,7 +15,7 @@ Configure your embed user variables
 
 `vi ./demo/demo_config.json`
 
-Configure your `dashboardId` variable to embed a dashboard
+Configure your `dashboardId` and `lookerHost` variables to embed a dashboard
 
 ```
 npm install
