@@ -59,3 +59,19 @@ It should say:
 
 Return to your browser to https://embed.demo:8080 and refresh the page.
 You should see an API response populate under the dashboard
+
+```
+{
+  "id": 1537,
+  "first_name": "Pat",
+  "last_name": "Embed",
+  "avatar_url": "https://gravatar.lookercdn.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=156&d=blank",
+  "display_name": "Pat Embed",
+  "url": "https://localhost:19999/api/3.1/users/1537",
+  "can": {
+    "show": true,
+    "index": true,
+    "show_details": true
+  }
+}
+```
