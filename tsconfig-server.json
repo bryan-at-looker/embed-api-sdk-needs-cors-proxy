@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "outDir": "server_utils",
-    "strict": true,
+    "strict": false,
     "target": "ES5",
     "lib": ["es6", "es2017.object"],
     "plugins": [

@@ -24,11 +24,26 @@ import { LookerEmbedSDK, LookerEmbedLook, LookerEmbedDashboard } from '../src/in
  * THE SOFTWARE.
  */
 
-import { lookerHost, dashboardId, lookId } from './demo_config'
+import { lookerHost, dashboardId, lookId, corsProxy } from './demo_config'
+import { LookerSDK, CorsSession, IApiSettings, AuthToken, IError } from '@looker/sdk'
+
+let sdk: LookerSDK
+class EmbedSession extends CorsSession {
+  async getToken() {
+    const token = await sdk.ok(sdk.authSession.transport.request<AuthToken,IError>('GET', `${document.location.origin}/token`  ))
+    return token
+  }
+}
+
+const session = new EmbedSession({
+  base_url: `${corsProxy}/https://${lookerHost}:19999`,
+  api_version: '3.1'
+} as IApiSettings)
+sdk = new LookerSDK(session)
 
 LookerEmbedSDK.init(lookerHost, '/auth')
 
-const setupDashboard = (dashboard: LookerEmbedDashboard) => {
+const setupDashboard = async (dashboard: LookerEmbedDashboard) => {
   const runButton = document.querySelector('#run')
   if (runButton) {
     runButton.addEventListener('click', () => dashboard.run())
@@ -38,6 +53,12 @@ const setupDashboard = (dashboard: LookerEmbedDashboard) => {
     stateFilter.addEventListener('change', (event) => {
       dashboard.updateFilters({ 'State / Region': (event.target as HTMLSelectElement).value })
     })
+  }
+
+  const me = await sdk.ok(sdk.me())
+  const api_text = document.getElementById('api')
+  if (api_text) { 
+    api_text.innerHTML = JSON.stringify(me, null ,2)
   }
 }
 

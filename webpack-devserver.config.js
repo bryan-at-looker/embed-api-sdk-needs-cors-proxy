@@ -2,7 +2,7 @@ var path = require('path')
 var config = require ('./config')
 
 var user = require('./demo/demo_user.json')
-var { createSignedUrl } = require('./server_utils/auth_utils')
+var { createSignedUrl, accessToken } = require('./server_utils/auth_utils')
 
 var webpackConfig = {
   mode: 'development',
@@ -12,6 +12,11 @@ var webpackConfig = {
   output: {
     filename: "[name].js",
     path: path.join(__dirname, "demo")
+  },
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
   },
   resolve: {
     extensions: [".ts", ".js"],
@@ -39,6 +44,7 @@ var webpackConfig = {
     ],
     host: config.demo_host,
     port: config.demo_port,
+    https: true,
     watchContentBase: true,
     before: (app) => {
       app.get('/auth', function(req, res) {
@@ -46,6 +52,10 @@ var webpackConfig = {
         const src = req.query.src;
         const url = createSignedUrl(src, user, config.host, config.secret);
         res.json({ url });
+      });
+      app.get('/token', async function(req, res) {
+        const token = await accessToken(user.external_user_id);
+        res.json( token );
       });
     }
   }

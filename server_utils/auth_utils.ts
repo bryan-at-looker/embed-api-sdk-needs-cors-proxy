@@ -156,3 +156,19 @@ export function createSignedUrl (
 
   return `https://${host}${embedPath}?${stringify(params)}`
 }
+
+import { NodeSession, LookerSDK, NodeSettings, IEmbedSsoUrlParams } from '@looker/sdk'
+
+const settings = new NodeSettings()
+const session = new NodeSession(settings)
+const sdk = new LookerSDK(session)
+const path = require('path')
+
+export async function accessToken (external_user_id: string) {
+  var user = await sdk.ok(sdk.user_for_credential('embed',external_user_id))
+  if (user && user.id) {
+    return await sdk.ok(sdk.login_user(user['id']))
+  } else {
+    return {}
+  }
+}
