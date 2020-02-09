@@ -45,6 +45,8 @@ npm install
 
 ## optional fix the vulnerabilities
 npm audit fix --force
+
+## change the port
 export PORT=9090
 
 ## start the server
