@@ -13,7 +13,7 @@ Configure your .env for your Looker values in LOOKERSDK_BASE_URL, LOOKER_EMBED_H
 
 Configure your embed user variables
 
-`vi ./demo/demo_config.json`
+`vi ./demo/demo_config.ts`
 
 Configure your `dashboardId` and `lookerHost` variables to embed a dashboard
 
